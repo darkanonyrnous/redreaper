@@ -79,7 +79,7 @@ redreaper/
 ## ⚙️ Installation
 
 ```bash
-git clone https://github.com/4n0nyrn0u5/redreaper.git
+git clone https://github.com/darkanonyrnous/redreaper.git
 cd redreaper
 python3 redreaper.py --help
 ```
