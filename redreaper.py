@@ -251,15 +251,30 @@ class Scanner:
             self.log.info("Subdomain topilmadi")
 
     # ── Faza 3: URL Discovery ──────────────────────────────────
+    def _baseline(self, base):
+        """Mavjud bo'lmagan tasodifiy yo'lga javob — false-positive filtri uchun."""
+        rnd = self.http.get(f"{base}/{uuid.uuid4().hex}")
+        return rnd['status'], len(rnd['body'] or '')
+
+    def _looks_like_catchall(self, resp, base_status, base_len):
+        """Server bu yo'lga ham baseline bilan bir xil javob berdimi?"""
+        return (resp['status'] == base_status and
+                abs(len(resp['body'] or '') - base_len) < 64)
+
     def _url_discovery(self):
         self.log.info("URL / path discovery...")
-        base = self.target.url.rstrip('/')
+        parsed = urlparse(self.target.url)
+        base = f"{parsed.scheme}://{parsed.netloc}"
+        base_status, base_len = self._baseline(base)
         for path in SENSITIVE_PATHS:
             url  = f"{base}/{path}"
             resp = self.http.get(url)
-            if resp['status'] and resp['status'] not in [0, 404]:
-                self.target.endpoints.append(path)
-                self.log.success(f"Topildi: /{path}  [{resp['status']}]")
+            if not resp['status'] or resp['status'] in (0, 404):
+                continue
+            if self._looks_like_catchall(resp, base_status, base_len):
+                continue
+            self.target.endpoints.append(path)
+            self.log.success(f"Topildi: /{path}  [{resp['status']}]")
 
     # ── Faza 4: SQL Injection ──────────────────────────────────
     def _sqli(self):
@@ -458,12 +473,18 @@ class Scanner:
             'CRITICAL': 9.1, 'HIGH': 7.5, 'MEDIUM': 5.0,
             'LOW': 3.0, 'INFO': 0.0,
         }
+        parsed = urlparse(self.target.url)
+        base = f"{parsed.scheme}://{parsed.netloc}"
+        base_status, base_len = self._baseline(base)
         for path, name, level in checks:
-            test_url = self.target.url.rstrip('/') + path
+            test_url = base + path
             resp     = self.http.get(test_url)
-            if resp['status'] and resp['status'] not in [0, 404]:
-                sev = sev_map[level]
-                self._add_vuln(
+            if not resp['status'] or resp['status'] in (0, 404):
+                continue
+            if self._looks_like_catchall(resp, base_status, base_len):
+                continue
+            sev = sev_map[level]
+            self._add_vuln(
                     f"Sensitive Path: {name}", sev,
                     test_url, "", "", cvss_map[level],
                     f"HTTP {resp['status']} — {path} accessible", "CWE-200",
