@@ -1,4 +1,4 @@
-# 🩸 RedReaper Pro v4.0 — Enterprise Red Team Framework
+# RedReaper — Web Recon & Vulnerability Scanner
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.8%2B-blue?style=flat-square&logo=python" />
@@ -45,7 +45,7 @@
 | **CVE Patterns** | `.env`, `.git/config`, Spring Boot Actuator, Swagger, H2 Console, phpinfo, Apache server-status, WEB-INF |
 
 ### 📊 Reporting
-- **HTML Report** — Professional dark-theme with CVSS scores, CWE links, risk badge
+- **HTML Report** — Dark-theme with CVSS scores, CWE links, risk badge
 - **Auto browser open** — Report opens automatically after scan
 - **Executive Summary** — Risk level, vuln counts, recon results
 
@@ -199,16 +199,16 @@ Adding a new scan module:
 
 ## 🎓 About
 
-RedReaper Pro was built as a **Red Team portfolio project** — demonstrating practical knowledge of web vulnerability classes, offensive tooling, and report generation. Built entirely on Python stdlib with zero external dependencies.
+RedReaper was built as a portfolio project — demonstrating practical knowledge of web vulnerability classes, offensive tooling, and report generation. Built entirely on Python stdlib with zero external dependencies.
 
 **Skills demonstrated:**
 - OWASP Top 10 vulnerability implementation
 - Python dataclasses, enums, threading, sockets
 - Portable HTTP client without third-party libs
-- Professional HTML report generation
+- HTML report generation
 - Offensive Red Team tooling design
 
-**Related projects:** → [PenTool v2.0](https://github.com/4n0nyrn0u5/pentool) — Full OSINT + Web Scanner Framework
+**Related projects:** → [PenTool v2.0](https://github.com/darkanonyrnous/pentool) — Full OSINT + Web Scanner Framework
 
 ---
 
@@ -221,5 +221,5 @@ MIT License — see [LICENSE](LICENSE).
 ---
 
 <p align="center">
-  <strong>RedReaper Pro v4.0</strong> · Built for ethical hacking & CTF · Use responsibly
+  <strong>RedReaper</strong> · For ethical hacking & CTF · Use responsibly
 </p>
