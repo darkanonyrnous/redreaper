@@ -5,17 +5,13 @@ Author: Red Team Project
 ⚠ Faqat ruxsat berilgan tizimlarda foydalaning (CTF, Bug Bounty, authorized pentest)
 """
 
-import os, sys, json, re, time, argparse, subprocess, socket, ssl, random, threading, queue
-import urllib.parse, hashlib, base64, ipaddress, datetime, textwrap, logging, html, csv, io
-import http.server, socketserver, webbrowser, tempfile, shutil, platform, uuid, string, enum
-import http.client, ssl as ssl_module
-from concurrent.futures import ThreadPoolExecutor, as_completed
+import os, time, argparse, socket, ssl, base64, datetime, html, webbrowser, uuid
+import urllib.parse
 from urllib.request import Request, urlopen, URLError
-from urllib.parse import urlparse, urljoin, quote, unquote
-from typing import List, Dict, Tuple, Optional, Set, Any
+from urllib.parse import urlparse
+from typing import List, Dict
 from dataclasses import dataclass, field
 from enum import Enum
-from collections import defaultdict
 
 # ========================[ COLORS ]========================
 class Colors:
